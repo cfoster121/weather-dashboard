@@ -1,1 +1,33 @@
-html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="images/sun.png">
+    <title>Weather</title>
+</head>
+
+<body>
+
+    <header>
+        <h1>Weather Forecast</h1>
+    </header>
+
+    <div>
+        <form class="form-group form-inline col-3">
+            <input type="text" class="form-control" id="searchCity" placeholder="Enter city">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <ul class="list-group col-3">
+        </ul>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

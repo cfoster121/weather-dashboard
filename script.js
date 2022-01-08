@@ -1,4 +1,10 @@
-js
+//Adds each city to list on page with button click
+$(".btn").click(function (e) {
+    e.preventDefault();
+    let cityName = $("#searchCity").val();
+    $("ul").append("<li>" + cityName + "</li>");
+    $("li").addClass("list-group-item"); 
+});
 
 
 // -Step 1
