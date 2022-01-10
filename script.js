@@ -8,12 +8,12 @@ $(".btn").click(function (e) {
 
 
 //Current Weather
-let city = ""
+let city = "Orlando"
 
 $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=c4d9a78b6ae4d8ac86d38fd00d946670", function(data) {
-    console.log(data);
+    // console.log(data);
     
-    var weatherType = data.weather[0].main
+    var weatherType = data.weather[0].main;
     var icon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
     var degrees = data.main.temp + " ℉";
     var humidity = data.main.humidity + "%";
@@ -24,7 +24,7 @@ $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=
     $(".temperature").append(degrees);
     $(".humidity").append(humidity);
     $(".wind-speed").append(windSpeed);
-})
+});
     
 
 //UV index
@@ -32,7 +32,28 @@ $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=
     // $(".uv-index").append(uvIndex);
 
 
+    
 //5 Day Forecast
+$.getJSON("http://dataservice.accuweather.com/locations/v1/search?apikey=0q8znAyCHgfaN2OS3I5rUKa5s2gbg4x2&q=campbell", function(data) {
+    let locationKey = data[0].Key
+    console.log(locationKey)
+    $.getJSON("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + locationKey + "?apikey=0q8znAyCHgfaN2OS3I5rUKa5s2gbg4x2", function(data){
+
+    var day1 = "High today - " + data.DailyForecasts[0].Temperature.Maximum.Value + " ℉";
+    // var day2 = "Temp tomorrow" + data.list[1].main.temp;
+    // var day3 = "Temp in 2 days" + data.list[2].main.temp;
+    // var day4 = "Temp in 3 days" + data.list[3].main.temp;
+    // var day5 = "Temp in 4 days" + data.list[4].main.temp;
+
+    $("#d1").append(day1);
+    //     $("#d1").append(day2);
+    //     $("#d1").append(day3);
+    //     $("#d1").append(day4);
+    //     $("#d1").append(day5);
+    
+    })
+});
+
 
 
 // ****************Step 1****************
