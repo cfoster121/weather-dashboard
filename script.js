@@ -3,11 +3,39 @@ $(".btn").click(function (e) {
     e.preventDefault();
     let cityName = $("#searchCity").val();
     $("ul").append("<li>" + cityName + "</li>");
-    $("li").addClass("list-group-item"); 
+    $("li").addClass("list-group-item");
 });
 
 
-// -Step 1
+//Current Weather
+let city = ""
+
+$.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=c4d9a78b6ae4d8ac86d38fd00d946670", function(data) {
+    console.log(data);
+    
+    var weatherType = data.weather[0].main
+    var icon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+    var degrees = data.main.temp + " ℉";
+    var humidity = data.main.humidity + "%";
+    var windSpeed = data.wind.speed + " mph";
+
+    $(".weather-type").append(weatherType);
+    $(".weather-icon").attr("src", icon);
+    $(".temperature").append(degrees);
+    $(".humidity").append(humidity);
+    $(".wind-speed").append(windSpeed);
+})
+    
+
+//UV index
+    // var uvIndex = 
+    // $(".uv-index").append(uvIndex);
+
+
+//5 Day Forecast
+
+
+// ****************Step 1****************
 // -What is the step
 // - Create a form that accept inputs and appends them to the page
 // -Why am I going to do it

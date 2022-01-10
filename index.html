@@ -17,7 +17,7 @@
         <h1>Weather Forecast</h1>
     </header>
 
-    <div>
+    <div class="col-3">
         <form class="form-group form-inline col-3">
             <input type="text" class="form-control" id="searchCity" placeholder="Enter city">
             <button type="submit" class="btn btn-primary">Search</button>
@@ -25,6 +25,16 @@
         <ul class="list-group col-3">
         </ul>
     </div>
+
+<div class="col-8">
+    <h2>Current Weather</h2>
+    <p class="weather-type"></p>
+    <p class="temperature"></p>
+    <img class="weather-icon" src=""></img>
+    <p class="humidity"></p>
+    <p class="wind-speed"></p>
+    <p class="uv-index"></p>
+</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="script.js"></script>
