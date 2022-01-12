@@ -1,8 +1,9 @@
-//Adds each city to list on page with button click
-function citySearch() {
+//Saves searched city name to local storage
+let city = localStorage.getItem("City");
 
-    //Saves searched city name to local storage
-    let city = localStorage.getItem("City");
+
+//Adds each city to list on page with button click
+function citySearch(city) {
 
     //Current Weather
     //Uses local storage to populate API to collect current weather data from searched city
@@ -28,13 +29,14 @@ function citySearch() {
         var lat = data.coord.lat
         var long = data.coord.lon
 
+        console.log(lat, long)
 
         //5 Day forecast 
         //Populate API using saved lat/long data for current city
         $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&exclude=current,minutely,hourly,alers&units=imperial&appid=c4d9a78b6ae4d8ac86d38fd00d946670", function (data) {
 
 
-        //UV Index color coordinated by severity
+            //UV Index color coordinated by severity
             var uvIndex = data.daily[0].uvi
 
             if (data.daily[0].uvi < 3) {
@@ -60,26 +62,52 @@ function citySearch() {
 
 
 
-            //Day of the week for 5 consecutive days starting today
-            let dayOne = moment().format('dddd')
-            let dayTwo = moment().add(1, "d").format('dddd')
-            let dayThree = moment().add(2, "d").format('dddd')
-            let dayFour = moment().add(3, "d").format('dddd')
-            let dayFive = moment().add(4, "d").format('dddd')
+            //Day of the week + date for 5 consecutive days starting today
+            let dayOne = moment().format('ddd MMM Do')
+            let dayTwo = moment().add(1, "d").format('ddd MMM Do')
+            let dayThree = moment().add(2, "d").format('ddd MMM Do')
+            let dayFour = moment().add(3, "d").format('ddd MMM Do')
+            let dayFive = moment().add(4, "d").format('ddd MMM Do')
 
-            //Creates values for day of week, weather condition, high, and low
-            var day1 = "<br>" + dayOne + "<br>" + "<br>" + data.daily[0].weather[0].main + "<br>" + "High - " + data.daily[0].temp.max + " ℉" + "<br>" + "Low - " + data.daily[0].temp.min + " ℉" + "<br>" + "<br>";
-            var day2 = "<br>" + dayTwo + "<br>" + "<br>" + data.daily[1].weather[0].main + "<br>" + "High - " + data.daily[1].temp.max + " ℉" + "<br>" + "Low - " + data.daily[1].temp.min + " ℉" + "<br>" + "<br>";
-            var day3 = "<br>" + dayThree + "<br>" + "<br>" + data.daily[2].weather[0].main + "<br>" + "High - " + data.daily[2].temp.max + " ℉" + "<br>" + "Low - " + data.daily[2].temp.min + " ℉" + "<br>" + "<br>";
-            var day4 = "<br>" + dayFour + "<br>" + "<br>" + data.daily[3].weather[0].main + "<br>" + "High - " + data.daily[3].temp.max + " ℉" + "<br>" + "Low - " + data.daily[3].temp.min + " ℉" + "<br>" + "<br>";
-            var day5 = "<br>" + dayFive + "<br>" + "<br>" + data.daily[4].weather[0].main + "<br>" + "High - " + data.daily[4].temp.max + " ℉" + "<br>" + "Low - " + data.daily[4].temp.min + " ℉" + "<br>" + "<br>";
+            //Access daily weather icon from API
+            let dayOneIcon = "https://openweathermap.org/img/w/" + data.daily[0].weather[0].icon + ".png";
+            let dayTwoIcon = "https://openweathermap.org/img/w/" + data.daily[1].weather[0].icon + ".png";
+            let dayThreeIcon = "https://openweathermap.org/img/w/" + data.daily[2].weather[0].icon + ".png";
+            let dayFourIcon = "https://openweathermap.org/img/w/" + data.daily[3].weather[0].icon + ".png";
+            let dayFiveIcon = "https://openweathermap.org/img/w/" + data.daily[4].weather[0].icon + ".png";
 
-            //Displays daily values in containers
-            $("#d1").html(day1);
+            //Display daily weather icon from source
+            $("#d1-icon").attr("src", dayOneIcon)
+            $("#d2-icon").attr("src", dayTwoIcon)
+            $("#d3-icon").attr("src", dayThreeIcon)
+            $("#d4-icon").attr("src", dayFourIcon)
+            $("#d5-icon").attr("src", dayFiveIcon)
+
+
+            //Creates values for day of week, weather condition, high, low, and humidity
+            var day1 = "<br>" + dayOne + "<br>"
+            var day1weather = data.daily[0].weather[0].main + "<br>" + "High - " + data.daily[0].temp.max + " ℉" + "<br>" + "Low - " + data.daily[0].temp.min + " ℉" + "<br>" + "Humidity - " + data.daily[0].humidity + "%" + "<br>";
+            var day2 = "<br>" + dayTwo + "<br>"
+            var day2weather = data.daily[1].weather[0].main + "<br>" + "High - " + data.daily[1].temp.max + " ℉" + "<br>" + "Low - " + data.daily[1].temp.min + " ℉" + "<br>" + "Humidity - " + data.daily[1].humidity + "%" + "<br>";
+            var day3 = "<br>" + dayThree + "<br>"
+            var day3weather = data.daily[2].weather[0].main + "<br>" + "High - " + data.daily[2].temp.max + " ℉" + "<br>" + "Low - " + data.daily[2].temp.min + " ℉" + "<br>" + "Humidity - " + data.daily[2].humidity + "%" + "<br>";
+            var day4 = "<br>" + dayFour + "<br>"
+            var day4weather = data.daily[3].weather[0].main + "<br>" + "High - " + data.daily[3].temp.max + " ℉" + "<br>" + "Low - " + data.daily[3].temp.min + " ℉" + "<br>" + "Humidity - " + data.daily[3].humidity + "%" + "<br>";
+            var day5 = "<br>" + dayFive + "<br>"
+            var day5weather = data.daily[4].weather[0].main + "<br>" + "High - " + data.daily[4].temp.max + " ℉" + "<br>" + "Low - " + data.daily[4].temp.min + " ℉" + "<br>" + "Humidity - " + data.daily[4].humidity + "%" + "<br>";
+
+
+            //Displays date + weather values in daily containers, before and after weather icon
+            $("#d1").html(day1)
+            $("#d1-1").html(day1weather);
             $("#d2").html(day2);
+            $("#d2-1").html(day2weather)
             $("#d3").html(day3);
+            $("#d3-1").html(day3weather)
             $("#d4").html(day4);
+            $("#d4-1").html(day4weather)
             $("#d5").html(day5);
+            $("#d5-1").html(day5weather)
 
         })
     });
@@ -87,80 +115,32 @@ function citySearch() {
 
 }
 
+
+
+//Add new list element to Recent Searches list after submitting search 
 $(".btn").click(function (e) {
     e.preventDefault();
     let cityName = $("#searchCity").val();
     localStorage.setItem("City", cityName)
+    $("h2").html("Current Weather - " + cityName)
+    $("#searchCity").val("")
     let listEl = $("<li>")
     listEl.text(cityName)
     listEl.addClass("list-group-item")
     $("#recent-searches").append(listEl);
-    listEl.click(function (e) {
-        console.log("clicking prev")
-        console.log(cityName);
-    })
     citySearch(cityName)
-});
-
-// $(".list-group-item").click(function (e) {
-//     e.preventDefault()
-//     console.log("clicking prev")
-//     let prevCityName = e.target.textContent
-//     console.log(prevCityName);
-//     // citySearch(prevCityName);
-// })
 
 
-// ****************Step 1****************
-// -What is the step
-// - Create a form that accept inputs and appends them to the page
-// -Why am I going to do it
-// - Allow the user to input city for search
-// -How am I going to do it
-// - Forms or ui
-//
-// -Step 2
-// -What is the step
-// - Retrieve weather data from searched city
-// -Why am I going to do it
-// - Give the user the information they are looking for
-// -How am I going to do it
-// - js weather api
-//
-// -Step 3
-// -What is the step
-// - Modify api to include necessary information
-// -Why am I going to do it
-// - Acceptance criteria 2
-// -How am I going to do it
-// - Modify api to include city name, the date, an icon representation of weather conditions, the temperature, the humidity, the wind speed, and the UV index
-//
-// -Step 4
-// -What is the step
-// - Assign color codes to different UV index values
-// -Why am I going to do it
-// - Visually display quality of UV index
-// -How am I going to do it
-// - Make if/else function to display different colors for different UV balues
-//
-// -Step 5
-// -What is the step
-// - Display 5 day weather forecast for current city
-// -Why am I going to do it
-// - Show user future weather data along with current weather data
-// -How am I going to do it
-// - Second api
-//
-// -Step 6
-// -What is the step
-// - Make list items clickable to reload weather data for that city
-// -Why am I going to do it
-// - Allow user to easily view previous search data
-// -How am I going to do it
-// - Store data from original search criteria to be input back into current search criteria when list item is clicked
-//
-// -Step 7
-// -Finalize/format CSS
+    //Search prior city when clicked from search history list
+    listEl.click(function (e) {
+        let city = cityName
+        citySearch(city)
+
+    })
+})
+
+
+
 //
 //
 //***ACCEPTANCE CRITERIA***//

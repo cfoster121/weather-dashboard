@@ -8,24 +8,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <link rel="icon" href="images/sun.png">
     <title>Weather</title>
 </head>
 
+<header class="text-white text-center">
+    <h1>Weather Forecast</h1>
+</header>
+
+
 <body>
 
-    <header class="bg-success text-white text-center border rounded-pill p-3 shadow-sm">
-        <h1>Weather Forecast</h1>
-    </header>
 
     <br>
     <div class="container d-flex justify-content-center">
         <form>
             <div class="row mb-3 form-group">
-                <input type="text" class="form-control" id="searchCity" placeholder="Enter city">
+                <input type="text" class="form-control" id="searchCity" placeholder="Enter City">
             </div>
             <div class="d-flex justify-content-center">
-            <button type="submit" class="row btn btn-outline-secondary">Search</button>
+                <button type="submit" class="row btn btn-outline-secondary">Search</button>
             </div>
         </form>
     </div>
@@ -34,34 +39,63 @@
 
 
 
-    <div class="container bg-light border rounded-pill p-3 shadow-sm">
+    <div class="container border rounded-pill p-3 shadow-sm current">
         <h2 class="row d-flex justify-content-center">Current Weather</h2>
         <p class="row d-flex justify-content-center weather-type "></p>
-        <img class="row d-flex justify-content-center weather-icon" src=""></img>
+        <p class="row d-flex justify-content-center">
+            <img class="weather-icon" src=""></img>
+        </p>
         <p class="row d-flex justify-content-center temperature"></p>
         <p class="row d-flex justify-content-center humidity"></p>
         <p class="row d-flex justify-content-center wind-speed"></p>
         <p class="col-2 container d-flex border rounded-pill justify-content-center uv-index">
         </p>
     </div>
-<br>
-<br>
-    <div class="container bg-light border rounded-pill p-3 shadow-sm">
+    <br>
+    <br>
+    <div class="container border rounded-pill p-3 shadow-sm current">
         <h2 class="d-flex justify-content-center">5 Day Forecast</h2>
         <ul class="d-flex justify-content-center">
-            <li class="container d-flex justify-content-center text-center col bg-secondary border rounded-pill text-light" id="d1"></li>
-            <li class="col container d-flex justify-content-center text-center col  bg-secondary border rounded-pill text-light" id="d2"></li>
-            <li class="col container d-flex justify-content-center text-center col  bg-secondary border rounded-pill text-light" id="d3"></li>
-            <li class="col container d-flex justify-content-center text-center col  bg-secondary border rounded-pill text-light" id="d4"></li>
-            <li class="col container d-flex justify-content-center text-center col  bg-secondary border rounded-pill text-light" id="d5"></li>
+            <li
+                class="container d-block justify-content-center align-items-center text-center col border rounded-pill text-light five">
+                <p class="weekday" id="d1"></p>
+                <img id="d1-icon" src=""></img>
+                <p id="d1-1"></p>
+            </li>
+            <li
+                class="col container d-block justify-content-center text-center col border rounded-pill text-light five">
+                <p class="weekday" id="d2"></p>
+                <img id="d2-icon" src=""></img>
+                <p id="d2-1"></p>
+            </li>
+            <li
+                class="col container d-block justify-content-center text-center col border rounded-pill text-light five">
+                <p class="weekday" id="d3"></p>
+                <img id="d3-icon" src=""></img>
+                <p id="d3-1"></p>
+            </li>
+            <li
+                class="col container d-block justify-content-center text-center col border rounded-pill text-light five">
+                <p class="weekday" id="d4"></p>
+                <img id="d4-icon" src=""></img>
+                <p id="d4-1"></p>
+            </li>
+            <li
+                class="col container d-block justify-content-center text-center col border rounded-pill text-light five">
+                <p class="weekday" id="d5"></p>
+                <img id="d5-icon" src=""></img>
+                <p id="d5-1"></p>
+            </li>
         </ul>
     </div>
-
+    <br>
+    <br>
     <div>
-        <p>Recent Searches:</p>
+        <p id="history">Recent Searches:</p>
         <ul class="list-group" id="recent-searches">
         </ul>
     </div>
+
     <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"

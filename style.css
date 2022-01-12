@@ -1,9 +1,55 @@
-/* h1 {
-justify-content: center;
-text-align: center;
-display: flex;
-} */
+:root {
+    --font: 'Playfair Display', serif;
 
-.container {
-    background-color: $blue-100;
 }
+
+header {
+    font-family: var(--font);
+    background-color: rgb(15, 47, 95);
+    padding: 50px;
+}
+
+
+.current {
+    font-family: var(--font);
+    background-color: rgba(65, 135, 241, 0.747)
+}
+
+.five {
+    font-family: var(--font);
+    background-color: rgba(45, 96, 173, 0.877);
+}
+
+.weekday {
+    text-decoration: underline;
+    font-size: larger;
+}
+
+.form-control {
+    font-family: var(--font); 
+    text-align: center;
+}
+
+.btn {
+    font-family: var(--font);
+}
+
+#history {
+    font-family: var(--font);
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+.list-group-item{
+    font-family: var(--font);
+}
+
+.list-group-item:hover {
+    background-color: rgba(65, 135, 241, 0.747);
+    cursor: pointer;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgba(45, 96, 173, 0.877);
+}
+
