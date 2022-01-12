@@ -14,13 +14,13 @@ This page is a weather dashboard allowing the user to search any city and see th
 
 ## Essential Code
 
-*![GIF1](images/search.gif)
-*![GIF2](images/FiveDay.gif)
-*![IMG1](images/LowUV.png)
-*![IMG2](images/MedUV.png)
-*![IMG3](images/ModUV.png)
-*![IMG4](images/HighUV.png)
-*![IMG5](images/ExtremeUV.png)
+* ![GIF1](images/Search.gif)
+* ![GIF2](images/FiveDay.gif)
+* ![IMG1](images/LowUV.png)
+* ![IMG2](images/MedUV.png)
+* ![IMG3](images/ModUV.png)
+* ![IMG4](images/HighUV.png)
+* ![IMG5](images/ExtremeUV.png)
 
 
 
