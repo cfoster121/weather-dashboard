@@ -1,72 +1,88 @@
 //Adds each city to list on page with button click
+function citySearch() {
+    
+//Saves searched city name to local storage
+    let city = localStorage.getItem("City");
+
+//Current Weather
+    //Uses local storage to populate API to collect current weather data from searched city
+    $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=c4d9a78b6ae4d8ac86d38fd00d946670", function (data) {
+        console.log(data);
+
+    //Creates current weather attributes   
+        var weatherType = "Conditions: " + data.weather[0].main;
+        var icon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
+        var degrees = "Temperature: " + data.main.temp + " ℉";
+        var humidity = "Humidity: " + data.main.humidity + "%";
+        var windSpeed = "Wind Speed: " + data.wind.speed + " mph";
+
+    //Displays current weather attributes
+        $(".weather-type").html(weatherType);
+        $(".weather-icon").attr("src", icon);
+        $(".temperature").html(degrees);
+        $(".humidity").html(humidity);
+        $(".wind-speed").html(windSpeed);
+
+
+    //Saves latitude and longitude of searched city
+        var lat = data.coord.lat
+        var long = data.coord.lon
+
+
+    //5 Day forecast 
+        //Populate API using saved lat/long data for current city
+        $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&exclude=current,minutely,hourly,alers&units=imperial&appid=c4d9a78b6ae4d8ac86d38fd00d946670", function (data) {
+            console.log(data)
+
+        //Day of the week for 5 consecutive days starting today
+            let dayOne = moment().format('dddd')
+            let dayTwo = moment().add(1, "d").format('dddd')
+            let dayThree = moment().add(2, "d").format('dddd')
+            let dayFour = moment().add(3, "d").format('dddd')
+            let dayFive = moment().add(4, "d").format('dddd')
+
+        //Creates values for day of week, weather condition, high, and low
+            var day1 = "<br>" + dayOne + "<br>" + "<br>" + data.daily[0].weather[0].main + "<br>" + "High - " + data.daily[0].temp.max + " ℉" + "<br>" + "Low - " + data.daily[0].temp.min + " ℉" + "<br>" + "<br>";
+            var day2 = "<br>" + dayTwo + "<br>" + "<br>" + data.daily[1].weather[0].main + "<br>" + "High - " + data.daily[1].temp.max + " ℉" + "<br>" + "Low - " + data.daily[1].temp.min + " ℉" + "<br>" + "<br>";
+            var day3 = "<br>" + dayThree + "<br>" + "<br>" + data.daily[2].weather[0].main + "<br>" + "High - " + data.daily[2].temp.max + " ℉" + "<br>" + "Low - " + data.daily[2].temp.min + " ℉" + "<br>" + "<br>";
+            var day4 = "<br>" + dayFour + "<br>" + "<br>" + data.daily[3].weather[0].main + "<br>" + "High - " + data.daily[3].temp.max + " ℉" + "<br>" + "Low - " + data.daily[3].temp.min + " ℉" + "<br>" + "<br>";
+            var day5 = "<br>" + dayFive + "<br>" + "<br>" + data.daily[4].weather[0].main + "<br>" + "High - " + data.daily[4].temp.max + " ℉" + "<br>" + "Low - " + data.daily[4].temp.min + " ℉" + "<br>" + "<br>";
+
+        //Displays daily values in containers
+            $("#d1").html(day1);
+            $("#d2").html(day2);
+            $("#d3").html(day3);
+            $("#d4").html(day4);
+            $("#d5").html(day5);
+
+        })
+    });
+
+
+}
+
 $(".btn").click(function (e) {
     e.preventDefault();
     let cityName = $("#searchCity").val();
-    $("ul").append("<li>" + cityName + "</li>");
-    $("li").addClass("list-group-item");
-});
-
-
-//Current Weather
-let city = "Orlando"
-
-$.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=c4d9a78b6ae4d8ac86d38fd00d946670", function (data) {
-    // console.log(data);
-
-    var weatherType = data.weather[0].main;
-    var icon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
-    var degrees = data.main.temp + " ℉";
-    var humidity = data.main.humidity + "%";
-    var windSpeed = data.wind.speed + " mph";
-
-    $(".weather-type").append(weatherType);
-    $(".weather-icon").attr("src", icon);
-    $(".temperature").append(degrees);
-    $(".humidity").append(humidity);
-    $(".wind-speed").append(windSpeed);
-});
-
-
-//UV index
-//Accuweather API Key - 0q8znAyCHgfaN2OS3I5rUKa5s2gbg4x2
-
-
-
-
-//5 Day Forecast
-//Accuweather API Key - 0q8znAyCHgfaN2OS3I5rUKa5s2gbg4x2
-//Location Key
-$.getJSON("http://dataservice.accuweather.com/locations/v1/search?apikey=0q8znAyCHgfaN2OS3I5rUKa5s2gbg4x2&q=campbell", function (data) {
-    let locationKey = data[0].Key
-    console.log(locationKey)
-
-    //5 Day forecast
-    $.getJSON("http://dataservice.accuweather.com/forecasts/v1/daily/5day/" + locationKey + "?apikey=0q8znAyCHgfaN2OS3I5rUKa5s2gbg4x2", function (data) {
-
-        var day1 = "High today - " + data.DailyForecasts[0].Temperature.Maximum.Value + " ℉";
-        // var day2 = "Temp tomorrow" + data.list[1].main.temp;
-        // var day3 = "Temp in 2 days" + data.list[2].main.temp;
-        // var day4 = "Temp in 3 days" + data.list[3].main.temp;
-        // var day5 = "Temp in 4 days" + data.list[4].main.temp;
-
-        $("#d1").append(day1);
-        //     $("#d1").append(day2);
-        //     $("#d1").append(day3);
-        //     $("#d1").append(day4);
-        //     $("#d1").append(day5);
-
-        //UV index
-        $.getJSON("https://dataservice.accuweather.com/indices/v1/daily/1day/" + locationKey + "/-15?apikey=0q8znAyCHgfaN2OS3I5rUKa5s2gbg4x2", function (data) {
-
-            var uvIndex = "UV Index: " + data[0].Value + "(" + data[0].Category + ")" 
-
-            $(".uv-index").append(uvIndex);
-
-        })
-
+    localStorage.setItem("City", cityName)
+    let listEl = $("<li>")
+    listEl.text(cityName)
+    listEl.addClass("list-group-item")
+    $("#recent-searches").append(listEl);
+    listEl.click(function (e) {
+        console.log("clicking prev")
+        console.log(cityName);
     })
+    citySearch(cityName)
 });
 
+// $(".list-group-item").click(function (e) {
+//     e.preventDefault()
+//     console.log("clicking prev")
+//     let prevCityName = e.target.textContent
+//     console.log(prevCityName);
+//     // citySearch(prevCityName);
+// })
 
 
 // ****************Step 1****************
