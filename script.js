@@ -1,22 +1,22 @@
 //Adds each city to list on page with button click
 function citySearch() {
-    
-//Saves searched city name to local storage
+
+    //Saves searched city name to local storage
     let city = localStorage.getItem("City");
 
-//Current Weather
+    //Current Weather
     //Uses local storage to populate API to collect current weather data from searched city
     $.getJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial&appid=c4d9a78b6ae4d8ac86d38fd00d946670", function (data) {
         console.log(data);
 
-    //Creates current weather attributes   
+        //Creates current weather attributes   
         var weatherType = "Conditions: " + data.weather[0].main;
         var icon = "https://openweathermap.org/img/w/" + data.weather[0].icon + ".png";
         var degrees = "Temperature: " + data.main.temp + " ℉";
         var humidity = "Humidity: " + data.main.humidity + "%";
         var windSpeed = "Wind Speed: " + data.wind.speed + " mph";
 
-    //Displays current weather attributes
+        //Displays current weather attributes
         $(".weather-type").html(weatherType);
         $(".weather-icon").attr("src", icon);
         $(".temperature").html(degrees);
@@ -24,31 +24,57 @@ function citySearch() {
         $(".wind-speed").html(windSpeed);
 
 
-    //Saves latitude and longitude of searched city
+        //Saves latitude and longitude of searched city
         var lat = data.coord.lat
         var long = data.coord.lon
 
 
-    //5 Day forecast 
+        //5 Day forecast 
         //Populate API using saved lat/long data for current city
         $.getJSON("https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + long + "&exclude=current,minutely,hourly,alers&units=imperial&appid=c4d9a78b6ae4d8ac86d38fd00d946670", function (data) {
-            console.log(data)
 
-        //Day of the week for 5 consecutive days starting today
+
+        //UV Index color coordinated by severity
+            var uvIndex = data.daily[0].uvi
+
+            if (data.daily[0].uvi < 3) {
+                $(".uv-index").html("UV Index: " + uvIndex)
+                $(".uv-index").css("background-color", "rgb(37, 190, 37)")
+            }
+            if (data.daily[0].uvi >= 3 && data.daily[0].uvi < 6) {
+                $(".uv-index").html("UV Index: " + uvIndex)
+                $(".uv-index").css("background-color", "rgb(247, 247, 16)")
+            }
+            if (data.daily[0].uvi >= 6 && data.daily[0].uvi < 8) {
+                $(".uv-index").html("UV Index: " + uvIndex)
+                $(".uv-index").css("background-color", "orange")
+            }
+            if (data.daily[0].uvi >= 8 && data.daily[0].uvi < 11) {
+                $(".uv-index").html("UV Index: " + uvIndex)
+                $(".uv-index").css("background-color", "red")
+            }
+            if (data.daily[0].uvi >= 11) {
+                $(".uv-index").html("UV Index: " + uvIndex)
+                $(".uv-index").css("background-color", "rgb(174, 9, 207)")
+            }
+
+
+
+            //Day of the week for 5 consecutive days starting today
             let dayOne = moment().format('dddd')
             let dayTwo = moment().add(1, "d").format('dddd')
             let dayThree = moment().add(2, "d").format('dddd')
             let dayFour = moment().add(3, "d").format('dddd')
             let dayFive = moment().add(4, "d").format('dddd')
 
-        //Creates values for day of week, weather condition, high, and low
+            //Creates values for day of week, weather condition, high, and low
             var day1 = "<br>" + dayOne + "<br>" + "<br>" + data.daily[0].weather[0].main + "<br>" + "High - " + data.daily[0].temp.max + " ℉" + "<br>" + "Low - " + data.daily[0].temp.min + " ℉" + "<br>" + "<br>";
             var day2 = "<br>" + dayTwo + "<br>" + "<br>" + data.daily[1].weather[0].main + "<br>" + "High - " + data.daily[1].temp.max + " ℉" + "<br>" + "Low - " + data.daily[1].temp.min + " ℉" + "<br>" + "<br>";
             var day3 = "<br>" + dayThree + "<br>" + "<br>" + data.daily[2].weather[0].main + "<br>" + "High - " + data.daily[2].temp.max + " ℉" + "<br>" + "Low - " + data.daily[2].temp.min + " ℉" + "<br>" + "<br>";
             var day4 = "<br>" + dayFour + "<br>" + "<br>" + data.daily[3].weather[0].main + "<br>" + "High - " + data.daily[3].temp.max + " ℉" + "<br>" + "Low - " + data.daily[3].temp.min + " ℉" + "<br>" + "<br>";
             var day5 = "<br>" + dayFive + "<br>" + "<br>" + data.daily[4].weather[0].main + "<br>" + "High - " + data.daily[4].temp.max + " ℉" + "<br>" + "Low - " + data.daily[4].temp.min + " ℉" + "<br>" + "<br>";
 
-        //Displays daily values in containers
+            //Displays daily values in containers
             $("#d1").html(day1);
             $("#d2").html(day2);
             $("#d3").html(day3);
